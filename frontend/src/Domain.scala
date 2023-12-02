@@ -1,4 +1,4 @@
-object Bracket {
+object Domain {
 
   enum BracketNode:
     case Player(name: String)
@@ -18,14 +18,6 @@ object Bracket {
         case last :: Nil => (List(), players.appended(BracketNode.Bye(last)))
         case Nil         => (players, nodes)
       }
-  }
-
-  def main(args: Array[String]): Unit = {
-    val tournament = Tournament()
-    println("Created new Tournament!")
-    val p: BracketNode.Player = BracketNode.Player("Kaden")
-    val updated               = tournament.addPlayer(p)
-    println(s"Added player: $p")
   }
 
 }
