@@ -12,8 +12,15 @@ object frontend extends ScalaJSModule {
   override def scalaVersion   = projectScalaVersion
   override def scalaJSVersion = "1.14.0"
 
+  val circeVersion = "0.14.1"
+
   override def ivyDeps = Agg(
-    ivy"org.scala-js::scalajs-dom::2.8.0"
+    ivy"org.scala-js::scalajs-dom::2.8.0",
+    ivy"io.circe::circe-core::0.14.1",
+    ivy"io.circe::circe-generic::0.14.1",
+    ivy"io.circe::circe-parser::0.14.1",
+    ivy"com.raquo::laminar::16.0.0"
+    // ivy"org.typelevel::cats-effect::3.5.2" - to be used if needed
   )
 
 }

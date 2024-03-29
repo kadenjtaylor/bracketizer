@@ -15,27 +15,20 @@ object Server extends cask.MainRoutes {
       html(
         lang := "en",
         head(
-          tag("title")("Hello from ScalaJS"),
+          tag("title")("Bracketizer"),
           link(rel   := "icon", `type` := "image/x-icon", href := "resources/favicon.ico"),
           script(src := "/files/frontend/fastLinkJS.dest/main.js")
         ),
         body(
-          h1("Hello :)")
+          div(id := "appContainer")
         )
       )
     )
   )
 
-  def clickAction() = println("WOAH")
-
   @cask.staticFiles("/files/")
   def staticFiles() =
     "out/" // serve files from ./out/ in the root of the project
-
-  @cask.staticResources(
-    "/static/"
-  ) // unused, just documented as it was not very clear in docs
-  def staticResources() = "." // serve files from resouces in this module
 
   initialize()
 }

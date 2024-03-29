@@ -1,27 +1,35 @@
 import org.scalajs.dom.window.localStorage
 import Domain.*
+import cats.implicits
+import io.circe._, io.circe.generic.auto._, io.circe.parser._, io.circe.syntax._
 
 object Storage {
 
-  val storageKey = "forks"
+  // TODO: Both of these methods should be modeled as effects, right?
 
-  def loadTournament() = {
+  val storageKey = "pool-tournament"
+
+  def loadTournament(): Tournament = {
     Option(localStorage.getItem(storageKey)) match
       case None => {
         println("No saved tournament found - creating new tournament.")
         Tournament()
       }
       case Some(tourneyString) => {
-        println(s"Found value: $tourneyString")
-        // TODO: Deserialize tournament from string
-        Tournament()
+        decode[Tournament](tourneyString) match
+          case Left(value) => {
+            println(s"Unable to parse: $tourneyString as a Tournament.")
+            Tournament()
+          }
+          case Right(tournament) => {
+            println(s"Parsed tournament from local storage.")
+            tournament
+          }
       }
   }
 
   def storeTournament(t: Tournament) = {
-    // TODO: Actually serialize the tournament
-    val storageString = t.toString()
-    localStorage.setItem(storageKey, storageString)
+    localStorage.setItem(storageKey, t.asJson.noSpaces)
   }
 
 }
